@@ -9,6 +9,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.novogor.novogorapp.telegram_bot.configutation.PropertiesBot;
 import ru.novogor.novogorapp.telegram_bot.entity.IdMember;
 import ru.novogor.novogorapp.telegram_bot.service.IdMembersService;
+import ru.novogor.novogorapp.telegram_bot.service.SendMessageService;
 
 @Component
 public class TelegramBot extends TelegramLongPollingBot {
@@ -17,7 +18,7 @@ public class TelegramBot extends TelegramLongPollingBot {
     private PropertiesBot propertiesBot;
 
     @Autowired
-    IdMembersService idMembersService;
+    SendMessageService sendMessageService;
 
     public TelegramBot(@Value("${bot.token}") String token) {
         super(token);
@@ -31,24 +32,7 @@ public class TelegramBot extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
-            String messageText = update.getMessage().getText();
-            long chatId = update.getMessage().getChatId();
-            SendMessage message = new SendMessage();
-            if (messageText.equals(propertiesBot.pass())) {
-                message.setChatId(String.valueOf(chatId));
-                message.setText("пароль подтверждён");
-                idMembersService.save(new IdMember(chatId));
-            } else {
-                if (!idMembersService.isPresent(chatId)) {
-                    message.setChatId(String.valueOf(chatId));
-                    message.setText("введите пароль: ");
-                } else {
-                    message.setChatId(String.valueOf(chatId));
-
-                    message.setText("продолжаем...");
-                }
-            }
-
+            SendMessage message = sendMessageService.getMessage(update);
             try {
                 execute(message);
             } catch (Exception e) {
