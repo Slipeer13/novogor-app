@@ -10,7 +10,6 @@ import java.util.Date;
 @Table(name = "pump")
 @Getter
 @Setter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class Pump {
@@ -33,4 +32,12 @@ public class Pump {
     @JoinColumn(name = "status_id")
     private Status status;
 
+    @Override
+    public String toString() {
+        return "Насос{" +
+                "номер='" + name + '\'' +
+                 station +
+                status +
+                '}';
+    }
 }

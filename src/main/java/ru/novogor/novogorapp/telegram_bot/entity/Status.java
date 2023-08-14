@@ -11,7 +11,6 @@ import java.util.List;
 @Table(name = "status")
 @Getter
 @Setter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class Status {
@@ -31,5 +30,10 @@ public class Status {
     public List<Pump> getPumpList() {
         if(pumpList == null) pumpList = new ArrayList<>();
         return pumpList;
+    }
+
+    @Override
+    public String toString() {
+        return ", состояние " + name;
     }
 }

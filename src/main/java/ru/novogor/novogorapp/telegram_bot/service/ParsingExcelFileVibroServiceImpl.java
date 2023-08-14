@@ -18,6 +18,7 @@ import java.io.InputStream;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Locale;
 
 @Service
 public class ParsingExcelFileVibroServiceImpl implements ParsingExcelFileVibroService {
@@ -44,7 +45,7 @@ public class ParsingExcelFileVibroServiceImpl implements ParsingExcelFileVibroSe
                             String value = cell.getStringCellValue();
                             if (value.equalsIgnoreCase("цех")) {
                                 while (cells.hasNext()) {
-                                    String cellValue = cells.next().getStringCellValue();
+                                    String cellValue = cells.next().getStringCellValue().toLowerCase(Locale.ROOT);
                                     if (!cellValue.isEmpty()) {
                                         nameStation = cellValue.split(",")[1].trim();
                                         break;

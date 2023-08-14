@@ -10,7 +10,6 @@ import java.util.List;
 @Table(name = "station")
 @Getter
 @Setter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class Station {
@@ -26,4 +25,9 @@ public class Station {
     @OneToMany(mappedBy = "station")
     @ToString.Exclude
     private List<Pump> pumpList;
+
+    @Override
+    public String toString() {
+        return ", станция "+ name;
+    }
 }
