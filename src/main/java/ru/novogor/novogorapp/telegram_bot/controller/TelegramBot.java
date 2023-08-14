@@ -7,8 +7,6 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.novogor.novogorapp.telegram_bot.configutation.PropertiesBot;
-import ru.novogor.novogorapp.telegram_bot.entity.IdMember;
-import ru.novogor.novogorapp.telegram_bot.service.IdMembersService;
 import ru.novogor.novogorapp.telegram_bot.service.SendMessageService;
 
 @Component
@@ -18,7 +16,7 @@ public class TelegramBot extends TelegramLongPollingBot {
     private PropertiesBot propertiesBot;
 
     @Autowired
-    SendMessageService sendMessageService;
+    private SendMessageService sendMessageService;
 
     public TelegramBot(@Value("${bot.token}") String token) {
         super(token);
