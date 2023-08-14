@@ -9,7 +9,7 @@ import ru.novogor.novogorapp.telegram_bot.repository.IdMembersRepository;
 public class IdMembersServiceImpl implements IdMembersService{
 
     @Autowired
-    IdMembersRepository idMembersRepository;
+    private IdMembersRepository idMembersRepository;
 
     @Override
     public boolean isPresent(long id) {

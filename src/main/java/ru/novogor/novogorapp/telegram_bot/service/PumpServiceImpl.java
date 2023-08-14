@@ -12,7 +12,6 @@ import ru.novogor.novogorapp.telegram_bot.repository.StatusRepository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class PumpServiceImpl implements PumpService {
