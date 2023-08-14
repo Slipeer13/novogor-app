@@ -39,11 +39,18 @@ public class SendMessageImpl implements SendMessageService{
 
     @Override
     public String getResponseText(String messageText) {
-        String result = "не понятно";
-        if(messageText.toLowerCase(Locale.ROOT).contains("авар")) {
-            result = pumpService.getAllPumps(messageText).stream().map(e-> e + "\n").collect(Collectors.joining());
+        String result = null;
+        messageText = messageText.toLowerCase(Locale.ROOT);
+        if(messageText.contains("все авар")) {
+            result = pumpService.getPumpByStatus("аварийное").stream().map(e-> e + "\n").collect(Collectors.joining());
+        } else if (messageText.contains("все")) {
+            String[] request = messageText.split("все");
+            if(request.length > 1) {
+                result = pumpService.getPumpsFrom(request[1].trim()).stream().map(e -> e + "\n").collect(Collectors.joining());
+            }
         }
-        return result;
+        if(result == null || result.isEmpty()) result = "запрос не понятен";
+            return result;
     }
 
     @Override
