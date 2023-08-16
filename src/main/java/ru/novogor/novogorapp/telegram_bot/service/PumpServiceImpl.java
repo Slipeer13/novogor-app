@@ -54,7 +54,7 @@ public class PumpServiceImpl implements PumpService {
 
     @Override
     @Transactional
-    public List<Pump> getPumpsFrom(String station) {
+    public List<Pump> getPumpsFromStation(String station) {
         List<Station> stations = stationRepository.findAll();
         List<Station> stationList = stations.stream().filter(s -> s.getName().contains(station)).toList();
         return stationList.stream().flatMap(s -> s.getPumpList().stream()).toList();

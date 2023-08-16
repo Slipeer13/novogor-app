@@ -28,6 +28,6 @@ public class Station {
 
     @Override
     public String toString() {
-        return ", станция "+ name;
+        return " станция "+ name;
     }
 }

@@ -34,6 +34,6 @@ public class Status {
 
     @Override
     public String toString() {
-        return ", состояние " + name;
+        return " состояние " + name;
     }
 }
