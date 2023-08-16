@@ -19,6 +19,8 @@ public class SendMessageImpl implements SendMessageService{
     private IdMembersService idMembersService;
     @Autowired
     private PumpService pumpService;
+    @Autowired
+    private StationService stationService;
 
     @Override
     public SendMessage getMessage(Update update) {
@@ -41,15 +43,17 @@ public class SendMessageImpl implements SendMessageService{
     public String getResponseText(String messageText) {
         String result = null;
         messageText = messageText.toLowerCase(Locale.ROOT);
-        if(messageText.contains("все авар")) {
-            result = pumpService.getPumpByStatus("аварийное").stream().map(e-> e + "\n").collect(Collectors.joining());
-        } else if (messageText.contains("все")) {
+        if (messageText.contains("авар")) result = pumpService.getPumpByStatus("аварийное").stream().map(e-> e + "\n").collect(Collectors.joining());
+        else if (messageText.contains("тревож")) result = pumpService.getPumpByStatus("тревожное").stream().map(e-> e + "\n").collect(Collectors.joining());
+        else if (messageText.contains("хорош")) result = pumpService.getPumpByStatus("хорошее").stream().map(e-> e + "\n").collect(Collectors.joining());
+        else if (messageText.contains("все")) {
             String[] request = messageText.split("все");
             if(request.length > 1) {
-                result = pumpService.getPumpsFrom(request[1].trim()).stream().map(e -> e + "\n").collect(Collectors.joining());
+                result = pumpService.getPumpsFromStation(request[1].trim()).stream().map(e -> e + "\n").collect(Collectors.joining());
             }
         }
-        if(result == null || result.isEmpty()) result = "запрос не понятен";
+        else if (messageText.contains("станции")) result = stationService.getAllStation().stream().map(e -> e + "\n").collect(Collectors.joining());
+        if(result == null || result.isEmpty()) result = "запрос не понятен, возможные запросы:\nаварийные\nтревожные\nхорошие\nвсе {станция}\nстанции";
             return result;
     }
 
