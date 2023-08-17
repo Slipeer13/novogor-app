@@ -1,6 +1,5 @@
 package ru.novogor.novogorapp.telegram_bot.service;
 
-import com.sun.mail.util.MailSSLSocketFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -28,12 +27,13 @@ public class MailServiceImpl implements MailService{
         try {
             Properties props = new Properties();
             props.setProperty("mail.store.protocol", "imaps");
-            MailSSLSocketFactory sf = new MailSSLSocketFactory();
-            sf.setTrustAllHosts(true);
+            /*MailSSLSocketFactory sf = new MailSSLSocketFactory();
+            sf.setTrustAllHosts(true);*/
             props.put("mail.imaps.ssl.trust", "*");
-            props.put("mail.imaps.ssl.socketFactory", sf);
+            //props.put("mail.imaps.ssl.socketFactory", sf);
+            props.put("mail.imaps.ssl.protocols", "TLSv1.2");
             store = Session.getInstance(props).getStore();
-        } catch (NoSuchProviderException | GeneralSecurityException e) {
+        }  catch (NoSuchProviderException e) {
             e.printStackTrace();
         }
     }
