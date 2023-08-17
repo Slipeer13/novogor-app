@@ -60,7 +60,7 @@ public class SendMessageImpl implements SendMessageService{
             String[] request = messageText.split("все");
             if(request.length > 1) {
                 resultFromRequest = pumpService.getPumpsFromStation(request[1].trim()).stream().map(e -> e
-                        + "примечание: " + e.getNote() + "\n").collect(Collectors.joining());
+                        + " " + e.getNote() + "\n").collect(Collectors.joining());
                 result = resultFromRequest.isEmpty() ? "нет станции " + request[1].trim() : resultFromRequest;
             }
         }
