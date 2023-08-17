@@ -42,18 +42,32 @@ public class SendMessageImpl implements SendMessageService{
     @Override
     public String getResponseText(String messageText) {
         String result = null;
+        String resultFromRequest;
         messageText = messageText.toLowerCase(Locale.ROOT);
-        if (messageText.contains("авар")) result = pumpService.getPumpByStatus("аварийное").stream().map(e-> e + "\n").collect(Collectors.joining());
-        else if (messageText.contains("тревож")) result = pumpService.getPumpByStatus("тревожное").stream().map(e-> e + "\n").collect(Collectors.joining());
-        else if (messageText.contains("хорош")) result = pumpService.getPumpByStatus("хорошее").stream().map(e-> e + "\n").collect(Collectors.joining());
+        if (messageText.contains("авар")) {
+            resultFromRequest = pumpService.getPumpByStatus("аварийное").stream().map(e-> e + "\n").collect(Collectors.joining());
+            result = resultFromRequest.isEmpty() ? "нет аварийных" : resultFromRequest;
+        }
+        else if (messageText.contains("тревож")) {
+            resultFromRequest = pumpService.getPumpByStatus("тревожное").stream().map(e-> e + "\n").collect(Collectors.joining());
+            result = resultFromRequest.isEmpty() ? "нет тревожных" : resultFromRequest;
+        }
+        else if (messageText.contains("хорош")) {
+            resultFromRequest = pumpService.getPumpByStatus("хорошее").stream().map(e-> e + "\n").collect(Collectors.joining());
+            result = resultFromRequest.isEmpty() ? "нет хороших" : resultFromRequest;
+        }
         else if (messageText.contains("все")) {
             String[] request = messageText.split("все");
             if(request.length > 1) {
-                result = pumpService.getPumpsFromStation(request[1].trim()).stream().map(e -> e + "\n").collect(Collectors.joining());
+                resultFromRequest = pumpService.getPumpsFromStation(request[1].trim()).stream().map(e -> e + "\n").collect(Collectors.joining());
+                result = resultFromRequest.isEmpty() ? "нет станции " + request[1].trim() : resultFromRequest;
             }
         }
-        else if (messageText.contains("станции")) result = stationService.getAllStation().stream().map(e -> e + "\n").collect(Collectors.joining());
-        if(result == null || result.isEmpty()) result = "запрос не понятен, возможные запросы:\nаварийные\nтревожные\nхорошие\nвсе {станция}\nстанции";
+        else if (messageText.contains("станции")) {
+            resultFromRequest = stationService.getAllStation().stream().map(e -> e + "\n").collect(Collectors.joining());
+            result = resultFromRequest.isEmpty() ? "нет станций" : resultFromRequest;
+        }
+        if(result == null) result = "запрос не понятен, возможные запросы:\nаварийные\nтревожные\nхорошие\nвсе {станция}\nстанции";
             return result;
     }
 
