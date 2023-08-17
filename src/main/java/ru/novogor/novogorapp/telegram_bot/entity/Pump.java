@@ -20,6 +20,7 @@ public class Pump {
     @NotNull
     private String name;
     @NotNull
+    @Column(length = 512)
     private String note;
     @NotNull
     private Date dateVibroDiagnostic;
