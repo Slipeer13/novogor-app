@@ -59,7 +59,8 @@ public class SendMessageImpl implements SendMessageService{
         else if (messageText.contains("все")) {
             String[] request = messageText.split("все");
             if(request.length > 1) {
-                resultFromRequest = pumpService.getPumpsFromStation(request[1].trim()).stream().map(e -> e + "\n").collect(Collectors.joining());
+                resultFromRequest = pumpService.getPumpsFromStation(request[1].trim()).stream().map(e -> e
+                        + "примечание: " + e.getNote() + "\n").collect(Collectors.joining());
                 result = resultFromRequest.isEmpty() ? "нет станции " + request[1].trim() : resultFromRequest;
             }
         }
