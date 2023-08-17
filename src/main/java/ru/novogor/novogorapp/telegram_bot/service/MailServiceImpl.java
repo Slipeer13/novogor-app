@@ -1,6 +1,8 @@
 package ru.novogor.novogorapp.telegram_bot.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import ru.novogor.novogorapp.telegram_bot.configutation.PropertiesMail;
@@ -14,6 +16,7 @@ import java.util.Optional;
 import java.util.Properties;
 
 @Service
+@EnableAsync
 public class MailServiceImpl implements MailService{
 
     @Autowired
@@ -27,10 +30,7 @@ public class MailServiceImpl implements MailService{
         try {
             Properties props = new Properties();
             props.setProperty("mail.store.protocol", "imaps");
-            /*MailSSLSocketFactory sf = new MailSSLSocketFactory();
-            sf.setTrustAllHosts(true);*/
             props.put("mail.imaps.ssl.trust", "*");
-            //props.put("mail.imaps.ssl.socketFactory", sf);
             props.put("mail.imaps.ssl.protocols", "TLSv1.2");
             store = Session.getInstance(props).getStore();
         }  catch (NoSuchProviderException e) {
@@ -39,6 +39,7 @@ public class MailServiceImpl implements MailService{
     }
 
     @Override
+    @Async
     @Scheduled(fixedRate = 2 * 60000)
     public void getMessages() throws MessagingException, GeneralSecurityException, IOException, InterruptedException, ParseException {
         store.connect(propertiesMail.host(), propertiesMail.login(), propertiesMail.pass());
