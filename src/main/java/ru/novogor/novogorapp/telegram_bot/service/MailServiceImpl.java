@@ -34,7 +34,7 @@ public class MailServiceImpl implements MailService{
     }
 
     @Override
-    @Scheduled(fixedRate = 15 * 60000)
+    @Scheduled(fixedRate = 60000)
     public void getMessages() throws MessagingException, GeneralSecurityException, IOException, InterruptedException, ParseException {
         store.connect(propertiesMail.host(), propertiesMail.login(), propertiesMail.pass());
         // Получение папки с сообщениями
