@@ -24,17 +24,22 @@ public class MailServiceImpl implements MailService{
     private Store store;
 
     {
-        Properties props = new Properties();
-        props.setProperty("mail.store.protocol", "imaps");
         try {
+            Properties props = new Properties();
+            props.setProperty("mail.store.protocol", "imaps");
+            /*MailSSLSocketFactory sf = new MailSSLSocketFactory();
+            sf.setTrustAllHosts(true);*/
+            props.put("mail.imaps.ssl.trust", "*");
+            //props.put("mail.imaps.ssl.socketFactory", sf);
+            props.put("mail.imaps.ssl.protocols", "TLSv1.2");
             store = Session.getInstance(props).getStore();
-        } catch (NoSuchProviderException e) {
+        }  catch (NoSuchProviderException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    @Scheduled(fixedRate = 5 * 60000)
+    @Scheduled(fixedRate = 60000)
     public void getMessages() throws MessagingException, GeneralSecurityException, IOException, InterruptedException, ParseException {
         store.connect(propertiesMail.host(), propertiesMail.login(), propertiesMail.pass());
         // Получение папки с сообщениями
