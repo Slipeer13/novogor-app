@@ -34,9 +34,9 @@ public class Pump {
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Насос{").append("номер='").append(name).append('\'').append(", ").append(station)
+        StringBuilder result = new StringBuilder();
+        result.append("Насос{").append("номер='").append(name).append('\'').append(", ").append(station)
                 .append(", ").append(status).append('}');
-        return stringBuilder.toString();
+        return result.toString();
     }
 }
