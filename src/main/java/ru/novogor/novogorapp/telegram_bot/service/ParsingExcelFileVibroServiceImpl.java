@@ -29,7 +29,7 @@ public class ParsingExcelFileVibroServiceImpl implements ParsingExcelFileVibroSe
     private Date dateVibroDiagnostic;
 
     @Override
-    public Pump getPumpFromExcelFileVibro(MimeBodyPart part) throws MessagingException, IOException, ParseException {
+    public Pump getPumpFromExcelFileVibro(MimeBodyPart part) throws MessagingException, IOException {
         Pump pump = null;
         if (Part.ATTACHMENT.equalsIgnoreCase(part.getDisposition())) {
             try (InputStream inputStream = part.getInputStream()) {
