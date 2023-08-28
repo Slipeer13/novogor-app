@@ -6,7 +6,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import ru.novogor.novogorapp.telegram_bot.configutation.PropertiesMail;
-import ru.novogor.novogorapp.telegram_bot.feign_client.ClientForNotSleepingApp;
 
 import javax.mail.*;
 import javax.mail.search.FlagTerm;
