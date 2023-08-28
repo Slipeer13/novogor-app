@@ -6,6 +6,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import ru.novogor.novogorapp.telegram_bot.configutation.PropertiesMail;
+import ru.novogor.novogorapp.telegram_bot.feign_client.ClientForNotSleepingApp;
 
 import javax.mail.*;
 import javax.mail.search.FlagTerm;
@@ -40,7 +41,7 @@ public class MailServiceImpl implements MailService{
 
     @Override
     @Async
-    @Scheduled(fixedRate = 2 * 60000)
+    @Scheduled(fixedRate = 5 * 60000)
     public void getMessages() throws MessagingException, GeneralSecurityException, IOException, InterruptedException, ParseException {
         store.connect(propertiesMail.host(), propertiesMail.login(), propertiesMail.pass());
         // Получение папки с сообщениями
