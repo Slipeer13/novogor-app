@@ -29,10 +29,7 @@ public class PumpServiceImpl implements PumpService {
         Optional<Pump> pumpOptional = Optional.ofNullable(pumpRepository.findPumpByNameAndStationName(pump.getName(), pump.getStation().getName()));
         if(pumpOptional.isPresent()) {
             Pump oldPump = pumpOptional.get();
-            if(oldPump.getDateVibroDiagnostic().before(pump.getDateVibroDiagnostic())
-                    || oldPump.getDateVibroDiagnostic() == pump.getDateVibroDiagnostic()) {
-                update(oldPump, pump);
-            }
+            update(oldPump, pump);
         } else {
             Optional<Station> stationOptional = Optional.ofNullable(stationRepository.findStationByName(pump.getStation().getName()));
             Optional<Status> statusOptional = Optional.ofNullable(statusRepository.findStatusByName(pump.getStatus().getName()));
@@ -47,7 +44,11 @@ public class PumpServiceImpl implements PumpService {
     public void update(Pump oldPump, Pump pump) {
         oldPump.setNote(pump.getNote());
         Optional<Status> statusOptional = Optional.ofNullable(statusRepository.findStatusByName(pump.getStatus().getName()));
-        statusOptional.ifPresent(pump::setStatus);
+        if(statusOptional.isPresent()) {
+            oldPump.setStatus(statusOptional.get());
+        } else {
+            oldPump.setStatus(pump.getStatus());
+        }
         oldPump.setDateVibroDiagnostic(pump.getDateVibroDiagnostic());
         pumpRepository.save(oldPump);
     }

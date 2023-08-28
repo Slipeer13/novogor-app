@@ -8,7 +8,7 @@ public interface PumpService {
 
     void save(Pump pump);
 
-    void update(Pump pump, Pump newPump);
+    void update(Pump oldPump, Pump pump);
 
     List<Pump> getPumpsFromStation(String station);
 
