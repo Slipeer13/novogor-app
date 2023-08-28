@@ -16,6 +16,9 @@ public class ClientForNotSleepingAppCall {
     @Async
     @Scheduled(fixedRate = 20 * 60000)
     public void call() {
-        client.checkForNotSleeping();
+        try {
+            client.checkForNotSleeping();
+        } catch (Exception ignored) {
+        }
     }
 }

@@ -48,11 +48,11 @@ public class SendMessageImpl implements SendMessageService{
             resultFromRequest = pumpService.getPumpByStatus("аварийное").stream().map(e-> e + "\n").collect(Collectors.joining());
             result = resultFromRequest.isEmpty() ? "нет аварийных" : resultFromRequest;
         }
-        else if (messageText.contains("тревож")) {
+        else if (messageText.contains("трев")) {
             resultFromRequest = pumpService.getPumpByStatus("тревожное").stream().map(e-> e + "\n").collect(Collectors.joining());
             result = resultFromRequest.isEmpty() ? "нет тревожных" : resultFromRequest;
         }
-        else if (messageText.contains("хорош")) {
+        else if (messageText.contains("хор")) {
             resultFromRequest = pumpService.getPumpByStatus("хорошее").stream().map(e-> e + "\n").collect(Collectors.joining());
             result = resultFromRequest.isEmpty() ? "нет хороших" : resultFromRequest;
         }

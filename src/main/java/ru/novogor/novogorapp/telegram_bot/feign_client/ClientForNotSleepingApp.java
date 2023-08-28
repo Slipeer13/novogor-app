@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.GetMapping;
 public interface ClientForNotSleepingApp {
 
     @GetMapping("/")
-    void checkForNotSleeping();
+    void checkForNotSleeping() throws Exception;
 }
