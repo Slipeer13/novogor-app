@@ -44,7 +44,11 @@ public class ParsingExcelFileVibroServiceImpl implements ParsingExcelFileVibroSe
                                 while (cells.hasNext()) {
                                     String cellValue = cells.next().getStringCellValue().toLowerCase(Locale.ROOT);
                                     if (!cellValue.isEmpty()) {
-                                        nameStation = cellValue.split(",")[1].trim();
+                                        if(cellValue.contains(",")) {
+                                            nameStation = cellValue.split(",")[1].trim();
+                                        } else {
+                                            nameStation = cellValue;
+                                        }
                                         break;
                                     }
                                 }
@@ -53,7 +57,11 @@ public class ParsingExcelFileVibroServiceImpl implements ParsingExcelFileVibroSe
                                 while (cells.hasNext()) {
                                     String cellValue = cells.next().getStringCellValue();
                                     if (!cellValue.isEmpty()) {
-                                        namePump = cellValue.substring(cellValue.indexOf("насос") + 6);
+                                        if(cellValue.contains("насос")) {
+                                            namePump = cellValue.substring(cellValue.indexOf("насос") + 6);
+                                        } else {
+                                            namePump = cellValue;
+                                        }
                                         break;
                                     }
                                 }
