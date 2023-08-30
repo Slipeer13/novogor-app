@@ -29,7 +29,9 @@ public class PumpServiceImpl implements PumpService {
         Optional<Pump> pumpOptional = Optional.ofNullable(pumpRepository.findPumpByNameAndStationName(pump.getName(), pump.getStation().getName()));
         if(pumpOptional.isPresent()) {
             Pump oldPump = pumpOptional.get();
-            update(oldPump, pump);
+            if(pump.getDateVibroDiagnostic().after(oldPump.getDateVibroDiagnostic())) {
+                update(oldPump, pump);
+            }
         } else {
             Optional<Station> stationOptional = Optional.ofNullable(stationRepository.findStationByName(pump.getStation().getName()));
             Optional<Status> statusOptional = Optional.ofNullable(statusRepository.findStatusByName(pump.getStatus().getName()));
