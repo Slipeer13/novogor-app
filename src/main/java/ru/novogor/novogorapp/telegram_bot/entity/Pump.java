@@ -38,14 +38,6 @@ public class Pump {
         this.note = Objects.requireNonNullElse(note, "");
     }
 
-    public void setDateVibroDiagnostic(Date dateVibroDiagnostic) {
-        this.dateVibroDiagnostic = Objects.requireNonNullElse(dateVibroDiagnostic, new Date());
-    }
-
-    public void setName(String name) {
-        this.name = Objects.requireNonNullElse(name, "неизвестный номер");
-    }
-
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();

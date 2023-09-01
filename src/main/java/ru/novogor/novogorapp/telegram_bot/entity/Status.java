@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "status")
@@ -26,10 +25,6 @@ public class Status {
     @OneToMany(mappedBy = "status")
     @ToString.Exclude
     private List<Pump> pumpList;
-
-    public void setName(String name) {
-        this.name = Objects.requireNonNullElse(name, "неизвестное состояние");
-    }
 
     @Override
     public String toString() {
