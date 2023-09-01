@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "status")
@@ -27,9 +27,8 @@ public class Status {
     @ToString.Exclude
     private List<Pump> pumpList;
 
-    public List<Pump> getPumpList() {
-        if(pumpList == null) pumpList = new ArrayList<>();
-        return pumpList;
+    public void setName(String name) {
+        this.name = Objects.requireNonNullElse(name, "неизвестное состояние");
     }
 
     @Override
