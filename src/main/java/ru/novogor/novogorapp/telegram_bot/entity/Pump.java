@@ -43,7 +43,7 @@ public class Pump {
     }
 
     public void setName(String name) {
-        this.name = Objects.requireNonNullElse(name, "неизвестная станция");
+        this.name = Objects.requireNonNullElse(name, "неизвестный номер");
     }
 
     @Override
