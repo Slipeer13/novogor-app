@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "pump")
@@ -32,6 +33,18 @@ public class Pump {
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "status_id")
     private Status status;
+
+    public void setNote(String note) {
+        this.note = Objects.requireNonNullElse(note, "");
+    }
+
+    public void setDateVibroDiagnostic(Date dateVibroDiagnostic) {
+        this.dateVibroDiagnostic = Objects.requireNonNullElse(dateVibroDiagnostic, new Date());
+    }
+
+    public void setName(String name) {
+        this.name = Objects.requireNonNullElse(name, "неизвестная станция");
+    }
 
     @Override
     public String toString() {
