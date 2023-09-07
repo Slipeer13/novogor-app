@@ -14,7 +14,7 @@ public class ClientForNotSleepingAppCall {
     private ClientForNotSleepingApp client;
 
     @Async
-    @Scheduled(fixedRate = 20 * 60000)
+    @Scheduled(fixedRate = 13 * 60000)
     public void call() {
         try {
             client.checkForNotSleeping();
