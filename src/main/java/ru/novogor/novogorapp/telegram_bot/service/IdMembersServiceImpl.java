@@ -5,15 +5,28 @@ import org.springframework.stereotype.Service;
 import ru.novogor.novogorapp.telegram_bot.entity.IdMember;
 import ru.novogor.novogorapp.telegram_bot.repository.IdMembersRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class IdMembersServiceImpl implements IdMembersService{
 
     @Autowired
     private IdMembersRepository idMembersRepository;
+    private List<Long> listId = new ArrayList<>();
 
     @Override
     public boolean isPresent(long id) {
-        return idMembersRepository.findById(id).isPresent();
+        boolean result = false;
+        if(listId.contains(id)) {
+            result = true;
+        } else {
+            if(idMembersRepository.findById(id).isPresent()) {
+                listId.add(id);
+                result = true;
+            }
+        }
+        return result;
     }
 
     @Override
