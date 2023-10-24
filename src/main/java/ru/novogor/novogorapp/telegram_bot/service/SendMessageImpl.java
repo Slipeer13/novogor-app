@@ -7,6 +7,8 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.novogor.novogorapp.telegram_bot.configutation.PropertiesBot;
 import ru.novogor.novogorapp.telegram_bot.entity.IdMember;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
@@ -23,10 +25,10 @@ public class SendMessageImpl implements SendMessageService{
     private StationService stationService;
 
     @Override
-    public SendMessage getMessage(Update update) {
+    public List<SendMessage> getMessage(Update update) {
         long chatId = update.getMessage().getChatId();
         String messageText = update.getMessage().getText();
-        SendMessage sendMessage = new SendMessage();
+        List<SendMessage> messageList = new ArrayList<>();
         String result;
         if(idMembersService.isPresent(chatId)) {
             result = getResponseText(messageText);
@@ -34,9 +36,20 @@ public class SendMessageImpl implements SendMessageService{
         } else {
             result = checkNewUser(messageText, chatId);
         }
-        sendMessage.setText(result);
-        sendMessage.setChatId(chatId);
-        return sendMessage;
+        int length = result.length();
+        if(length > 4096) {
+            int start = 0;
+            int end = 4096;
+            while (true){
+                messageList.add(new SendMessage(String.valueOf(chatId), result.substring(start, end)));
+                if(end == length) break;
+                start = end;
+                end = length - end > 4096 ? end + 4096 : length;
+            }
+        } else {
+            messageList.add(new SendMessage(String.valueOf(chatId), result));
+        }
+        return messageList;
     }
 
     @Override

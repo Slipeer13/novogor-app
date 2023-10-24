@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.novogor.novogorapp.telegram_bot.configutation.PropertiesBot;
 import ru.novogor.novogorapp.telegram_bot.service.SendMessageService;
 
@@ -30,12 +31,13 @@ public class TelegramBot extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
-            SendMessage message = sendMessageService.getMessage(update);
-            try {
-                execute(message);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            sendMessageService.getMessage(update).forEach(m-> {
+                try {
+                    execute(m);
+                } catch (TelegramApiException e) {
+                    e.printStackTrace();
+                }
+            });
         }
     }
 }
