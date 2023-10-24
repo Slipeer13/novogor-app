@@ -13,7 +13,7 @@ public class IdMembersServiceImpl implements IdMembersService{
 
     @Autowired
     private IdMembersRepository idMembersRepository;
-    private List<Long> listId = new ArrayList<>();
+    private final List<Long> listId = new ArrayList<>();
 
     @Override
     public boolean isPresent(long id) {
